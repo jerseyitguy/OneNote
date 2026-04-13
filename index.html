@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BDO | OneNote: The Ultimate Notebook</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Trebuchet MS"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            red: '#EC1D24',
+                            dark: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #EC1D24; }
+        
+        .brand-gradient-text {
+            background: linear-gradient(to right, #EC1D24, #f87171);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .step-transition {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .agenda-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(236, 29, 36, 0.4);
+            background-color: rgba(30, 41, 59, 0.8);
+        }
+        
+        .content-scroll {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-900 text-slate-100 font-sans selection:bg-brand-red selection:text-white">
+
+    <header class="relative overflow-hidden border-b border-slate-800 bg-slate-950 pt-16 pb-20">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[400px] bg-brand-red/10 blur-[120px] rounded-full pointer-events-none"></div>
+        
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="flex items-center gap-4 md:gap-6 mb-12">
+                <img src="https://raw.githubusercontent.com/jerseyitguy/CopilotStudioCourse/main/bdo-white.png" alt="BDO Logo" class="h-8 md:h-10 w-auto" onerror="this.src='https://via.placeholder.com/150x50/EC1D24/FFFFFF?text=BDO+LOGO'">
+                <div class="h-6 w-px bg-slate-700"></div>
+                <span class="text-lg md:text-xl font-semibold tracking-tight text-slate-300 uppercase tracking-widest text-sm">Training & Adoption</span>
+            </div>
+
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-red/10 border border-brand-red/20 text-brand-red text-xs font-bold uppercase tracking-widest mb-6">
+                <i data-lucide="book-open" class="w-4 h-4"></i>
+                Microsoft 365 Core Series
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
+                OneNote <br />
+                <span class="brand-gradient-text">The Ultimate Notebook</span>
+            </h1>
+            <p class="text-xl text-slate-400 max-w-2xl leading-relaxed">
+                Empowering staff with OneNote's latest features for efficient, secure note-taking and collaboration[cite: 5]. This 1.5-hour session preserves core basics while introducing power-user tips for the modern corporate context[cite: 4, 6].
+            </p>
+        </div>
+    </header>
+
+    <section class="py-20 bg-slate-950 border-b border-slate-800">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex items-center justify-between mb-12">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="list-checks" class="w-8 h-8 text-brand-red"></i>
+                    <h2 class="text-3xl font-bold">Session Curriculum</h2>
+                </div>
+                <span class="text-slate-500 text-sm font-mono uppercase">12 Core Modules</span>
+            </div>
+            
+            <div id="agenda-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-slate-900 relative">
+        <div class="absolute right-0 top-1/4 w-96 h-96 bg-brand-red/5 blur-[100px] rounded-full pointer-events-none"></div>
+        
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="mb-16 max-w-3xl">
+                <div class="flex items-center gap-3 mb-4">
+                    <i data-lucide="microscope" class="w-8 h-8 text-brand-red"></i>
+                    <h2 class="text-4xl font-bold uppercase tracking-tight">Interactive Workflow Guide</h2>
+                </div>
+                <p class="text-lg text-slate-400">
+                    A step-by-step breakdown of how to structure, capture, and track critical information using OneNote's robust cloud and integration capabilities.
+                </p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div id="stepper-nav" class="lg:w-1/3 flex flex-col gap-2">
+                    </div>
+
+                <div class="lg:w-2/3">
+                    <div class="bg-slate-950 border border-slate-800 rounded-3xl p-8 md:p-12 min-h-[600px] shadow-2xl relative overflow-hidden">
+                        <div class="absolute -top-24 -right-24 w-64 h-64 bg-brand-red/10 blur-[80px] rounded-full pointer-events-none"></div>
+                        <div id="step-content-inner" class="relative w-full h-full">
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 uppercase tracking-wider">Takeaway Principles</h2>
+                <p class="text-slate-400">Expert-led golden rules for practical modern note-taking adoption.</p>
+            </div>
+            <div id="practices-container" class="space-y-3">
+                </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-950 py-16 border-t border-slate-800 text-center text-slate-500">
+        <div class="flex flex-col items-center gap-6">
+            <img src="https://raw.githubusercontent.com/jerseyitguy/CopilotStudioCourse/main/bdo-white.png" alt="BDO Logo" class="h-8 opacity-40 grayscale" onerror="this.src='https://via.placeholder.com/100x30/FFFFFF/000000?text=BDO'">
+            <div class="flex justify-center items-center gap-2">
+                <i data-lucide="shield-check" class="w-5 h-5 text-brand-red"></i>
+                <span class="font-bold tracking-widest uppercase text-xs">Training & Adoption | 2026</span>
+            </div>
+            <p class="text-xs max-w-md mx-auto opacity-60">Workplace examples for real-world application.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- DATA ---
+        const agendaItems = [
+            { id: 1, title: "Introduction (5 min)", desc: "Welcome and setup for this 1.5-hour session focusing on the OneNote desktop app (formerly OneNote 2016)[cite: 4, 44].", icon: "flag" },
+            { id: 2, title: "Objectives & Benefits (5 min)", desc: "Understand OneNote as a portable, searchable, and shareable tool with robust security and sensitivity labels[cite: 18, 48].", icon: "target" },
+            { id: 3, title: "Basics Refresher (10 min)", desc: "Explore structure (notebooks, section groups, pages, subpages) and the new vertical tabs layout[cite: 19, 48].", icon: "layout-panel-left" },
+            { id: 4, title: "Creating & Saving (5 min)", desc: "Save notebooks correctly: OneDrive for personal, SharePoint/Teams for shared collaborative team notes[cite: 53].", icon: "cloud" },
+            { id: 5, title: "Properties & Sync (5 min)", desc: "Check sync status and learn to apply sensitivity labels for confidential data instead of section passwords[cite: 20, 53].", icon: "refresh-cw" },
+            { id: 6, title: "UI Tour (5 min)", desc: "Navigate the ribbon, find the new top-right search bar placement, and utilize Pen Focused View for inking[cite: 57].", icon: "mouse-pointer-click" },
+            { id: 7, title: "Sections & Pages (10 min)", desc: "Organize using Section Groups, reorder subpages, and arrange text using the freeform note containers[cite: 57].", icon: "layers" },
+            { id: 8, title: "Formatting & Tags (10 min)", desc: "Format text, create lists, and utilize the Tags gallery (Important, To-Do) for tracking[cite: 21, 24, 62].", icon: "type" },
+            { id: 9, title: "Task Follow-up (5 min)", desc: "Find aggregated tags and link action items to Planner or To Do (as direct Outlook task sync is deprecated)[cite: 25, 26, 62].", icon: "check-square" },
+            { id: 10, title: "Files & Integrations (10 min)", desc: "Insert File Printouts, links, and rich Meeting Details (including Loop components) directly from Outlook/Teams[cite: 11, 12, 64, 71].", icon: "link" },
+            { id: 11, title: "Media, Canvas & Tables (15 min)", desc: "Capture screen clippings (Win+Shift+S), use Microsoft Lens, and embed live Excel spreadsheets[cite: 22, 88, 98].", icon: "image" },
+            { id: 12, title: "Search & Wrap-up (15 min)", desc: "Use OCR to search text in images/handwriting, view Teams channel notes, and preview upcoming Copilot AI[cite: 23, 116, 125, 132].", icon: "search" }
+        ];
+
+        const steps = [
+            {
+                id: 1,
+                title: "Setup & Architecture",
+                icon: "folders",
+                content: "Establishing the right foundation is key. Create your notebook and choose the storage location carefully: use OneDrive for private notes, and SharePoint or Teams for shared team collaboration[cite: 19, 53]. Understand the deep hierarchy available to you, from high-level notebooks down to section groups, sections, pages, and subpages[cite: 48].",
+                tips: [
+                    "Toggle on the new vertical tabs view to mirror apps like Outlook[cite: 14, 48].", 
+                    "OneNote caches offline and auto-syncs changes automatically when online[cite: 53].", 
+                    "Use enterprise sensitivity labels instead of old password protections for confidential content[cite: 20, 53]."
+                ]
+            },
+            {
+                id: 2,
+                title: "Meeting Integrations",
+                icon: "calendar-check",
+                content: "OneNote fundamentally transforms meeting management. Use the 'Insert Meeting Details' feature to pull rich context directly from Outlook or Teams[cite: 11, 71]. Modern OneNote can even embed Teams Intelligent Recap content, including AI-generated meeting notes and shared Loop components, so you capture key takeaways automatically[cite: 12, 72].",
+                tips: [
+                    "Every standard Teams channel has a built-in Notes tab powered by OneNote[cite: 8, 117].", 
+                    "Email a page of notes directly via Outlook to share minutes quickly[cite: 39, 115].", 
+                    "Use 'Send to OneNote' in Outlook to route incoming emails into your notebook[cite: 65]."
+                ]
+            },
+            {
+                id: 3,
+                title: "Advanced Tagging & Tasks",
+                icon: "tags",
+                content: "Don't let action items slip through the cracks. Tag notes with built-in or custom tags like Important, Question, or To-Do[cite: 24, 62]. While direct OneNote-to-Outlook task sync is deprecated in the new Outlook, you can seamlessly adapt by manually linking note paragraphs into Microsoft Planner or To Do[cite: 25, 26, 122, 123].",
+                tips: [
+                    "Use the 'Find Tags' feature to aggregate action items across all notebooks into one pane[cite: 24, 62].", 
+                    "Press Ctrl+1 to quickly insert a To-Do checkbox[cite: 62].", 
+                    "Right-click a paragraph to 'Copy Link to Paragraph' and paste into a Planner task for context[cite: 120, 123]."
+                ]
+            },
+            {
+                id: 4,
+                title: "Media, Canvas & OCR Magic",
+                icon: "scan-text",
+                content: "OneNote is an infinite freeform canvas[cite: 18, 57]. You can easily capture screen clippings using Win+Shift+S [cite: 88], record synced audio directly into your notes during a meeting [cite: 23, 90], and embed online videos that preview inline[cite: 86, 87]. Furthermore, its built-in Optical Character Recognition (OCR) makes any text inside inserted images or scanned PDF printouts fully searchable[cite: 23, 85].",
+                tips: [
+                    "Audio recordings sync with your typing, allowing playback from a specific note point[cite: 90].", 
+                    "Use Microsoft Lens on your mobile device to scan documents directly into the desktop app[cite: 22, 92, 93].", 
+                    "Search robustly—OneNote can even find text within your handwritten notes[cite: 34, 125]."
+                ]
+            },
+            {
+                id: 5,
+                title: "Data Structuring & Templates",
+                icon: "table-properties",
+                content: "Enforce consistency across your team's documentation. Apply built-in or custom OneNote Page Templates for recurring processes like meeting minutes or project plans[cite: 28, 102]. For complex data, go beyond basic tables: you can insert an existing Excel spreadsheet directly into OneNote and view a live preview of the data alongside your notes[cite: 98].",
+                tips: [
+                    "Press 'Tab' after typing text to instantly start creating a basic table[cite: 96].", 
+                    "Design a standard layout and select 'Set as Default Template' for specific sections[cite: 103].", 
+                    "Use live Excel embeds to maintain and review complex risk matrices or budget tracking[cite: 99]."
+                ]
+            }
+        ];
+
+        const bestPractices = [
+            "Default to OneDrive for personal note storage and SharePoint/Teams for collaborative team notebooks[cite: 19, 53].",
+            "Leverage Microsoft 365 Sensitivity Labels over section passwords to securely protect confidential financial data[cite: 20, 48, 53].",
+            "Adapt to modern task tracking by manually copying OneNote paragraph links into Microsoft Planner or To Do[cite: 26, 62, 123].",
+            "Utilize OCR and cross-notebook search to instantly retrieve text buried in scanned PDFs, images, or handwriting[cite: 34, 124, 125].",
+            "Standardize team documentation by utilizing Page Templates for recurring client meetings and projects[cite: 104]."
+        ];
+
+        // --- STATE & RENDER ---
+        let activeStepId = 1;
+
+        function initData() {
+            const agendaCont = document.getElementById('agenda-container');
+            if (agendaCont) {
+                agendaCont.innerHTML = agendaItems.map(item => `
+                    <div class="agenda-card bg-slate-900 border border-slate-800 rounded-xl p-5 transition-all duration-300">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-brand-red/10 rounded-lg flex items-center justify-center shrink-0">
+                                <i data-lucide="${item.icon}" class="w-5 h-5 text-brand-red"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-100 text-sm mb-1">${item.title}</h3>
+                                <p class="text-slate-500 text-xs leading-relaxed">${item.desc}</p>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            const practicesCont = document.getElementById('practices-container');
+            if (practicesCont) {
+                practicesCont.innerHTML = bestPractices.map((bp, i) => `
+                    <div class="flex items-center gap-4 p-4 bg-slate-900 border border-slate-800 rounded-xl">
+                        <span class="text-brand-red font-black text-sm">${(i + 1).toString().padStart(2, '0')}</span>
+                        <p class="text-slate-300 text-sm">${bp}</p>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function renderStepper() {
+            const nav = document.getElementById('stepper-nav');
+            const cont = document.getElementById('step-content-inner');
+            if (!nav || !cont) return;
+
+            nav.innerHTML = steps.map(step => {
+                const isActive = step.id === activeStepId;
+                return `
+                    <button onclick="updateStep(${step.id})" aria-current="${isActive ? 'step' : 'false'}" class="flex items-center gap-4 p-4 rounded-xl text-left border transition-all duration-300 w-full 
+                        ${isActive ? 'bg-brand-red/10 border-brand-red/40 text-brand-red shadow-lg' : 'bg-slate-950 border-slate-800 text-slate-500 hover:bg-slate-900 hover:text-slate-300'}">
+                        <div class="p-2 rounded-lg ${isActive ? 'bg-brand-red/20' : 'bg-slate-800'} transition-colors">
+                            <i data-lucide="${step.icon}" class="w-5 h-5"></i>
+                        </div>
+                        <div class="flex-1 font-medium text-sm">
+                            <div class="text-[10px] uppercase tracking-widest opacity-60 mb-0.5">Stage ${step.id}</div>
+                            ${step.title}
+                        </div>
+                    </button>
+                `;
+            }).join('');
+
+            cont.innerHTML = steps.map(step => {
+                const isActive = step.id === activeStepId;
+                return `
+                    <div class="step-transition ${isActive ? 'opacity-100 translate-x-0 relative' : 'opacity-0 translate-x-12 absolute top-0 left-0 w-full pointer-events-none'}">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div class="p-4 bg-brand-red/20 text-brand-red rounded-2xl">
+                                <i data-lucide="${step.icon}" class="w-8 h-8"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-3xl font-black text-slate-100 uppercase tracking-tight">${step.title}</h3>
+                                <div class="text-brand-red text-xs font-bold tracking-[0.2em] uppercase mt-1">Workflow Phase ${step.id}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="content-scroll mb-10">
+                            <p class="text-xl text-slate-300 leading-relaxed">${step.content}</p>
+                        </div>
+
+                        <div class="bg-slate-900/80 rounded-2xl p-6 border border-slate-800">
+                            <h4 class="flex items-center gap-2 text-xs font-black text-slate-500 uppercase tracking-widest mb-4">
+                                <i data-lucide="shield" class="w-4 h-4 text-brand-red"></i>
+                                Professional Standards
+                            </h4>
+                            <ul class="space-y-4">
+                                ${step.tips.map(tip => `
+                                    <li class="flex items-start gap-3 text-slate-400 text-sm">
+                                        <i data-lucide="arrow-right-circle" class="w-5 h-5 text-brand-red shrink-0 mt-0.5"></i>
+                                        <span>${tip}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        window.updateStep = (id) => {
+            activeStepId = id;
+            renderStepper();
+        };
+
+        window.onload = function() {
+            initData();
+            renderStepper();
+            lucide.createIcons();
+        };
+    </script>
+</body>
+</html>
